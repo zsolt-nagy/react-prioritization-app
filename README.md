@@ -20,4 +20,5 @@ SO THAT we can report project progress to the executives
 
 ## Dependencies
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- We used the component library [ReactStrap](https://reactstrap.github.io/?path=/story/home-installation--page).
