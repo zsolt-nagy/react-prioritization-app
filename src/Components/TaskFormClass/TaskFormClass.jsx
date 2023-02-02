@@ -9,18 +9,24 @@ const FormContainer = styled.div`
 `;
 
 export default class TaskFormClass extends React.Component {
-    state = {
-        taskName: '',
-        duration: '' 
+    constructor(props) {
+        super(props);
+        this.state = {
+            taskName: '',
+            duration: '' 
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTaskNameChange = this.handleTaskNameChange.bind(this);
+        this.handleDurationChange = this.handleDurationChange.bind(this);
     }
-    handleSubmit = (event) => {
+    handleSubmit(event) {
         event.preventDefault();
         alert(this.state.taskName);
     }
-    handleTaskNameChange = (event) => {
+    handleTaskNameChange(event) {
         this.setState({ taskName: event.target.value });
     }
-    handleDurationChange = (event) => {
+    handleDurationChange(event) {
         this.setState({ duration: event.target.value });
     }    
     render() {
