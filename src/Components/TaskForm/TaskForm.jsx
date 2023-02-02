@@ -9,15 +9,35 @@ const FormContainer = styled.div`
 `;
 
 export default function TaskForm() {
+  const [taskName, setTaskName] = React.useState('');
+  const [duration, setDuration] = React.useState('');
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    // document.querySelector('[name=task-name]').value
+    alert(taskName);
+
+  }
+
+  function handleTaskNameChange(event) {
+    setTaskName(event.target.value);
+  }
+
+  function handleDurationChange(event) {
+    setDuration(event.target.value);
+  }
+
   return (
-    <FormContainer>
+    <FormContainer onSubmit={handleSubmit}>
       <Form>
         <FormGroup floating>
-          <Input
-            id="task-name"
-            name="task-name"
-            placeholder="Task name"
-            type="text"></Input>
+          <Input 
+            id="task-name" 
+            name="task-name" 
+            placeholder="Task name" 
+            type="text" 
+            value={taskName}
+            onChange={handleTaskNameChange}></Input>
           <Label htmlFor="task-name">Task name</Label>
         </FormGroup>
         <FormGroup floating>
@@ -25,7 +45,9 @@ export default function TaskForm() {
             id="duration"
             name="duration"
             placeholder="Duration"
-            type="text"></Input>
+            type="text"
+            value={duration} 
+            onChange={handleDurationChange}></Input>
           <Label htmlFor="duration">Duration</Label>            
         </FormGroup>    
         <FormGroup>

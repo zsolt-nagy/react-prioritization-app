@@ -1,6 +1,7 @@
 import './App.css';
 import Footer from './Components/Footer/Footer';
 import TaskForm from './Components/TaskForm/TaskForm';
+import TaskFormClass from './Components/TaskFormClass/TaskFormClass';
 import TaskWeeklyList from './Components/TaskWeeklyList/TaskWeeklyList';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       </header>
       <main>
         <TaskForm />
+        <TaskFormClass />
         <TaskWeeklyList />
       </main>
       <footer>
