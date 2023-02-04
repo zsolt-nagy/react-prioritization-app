@@ -65,7 +65,7 @@ const TaskCard = styled.div`
 export default function TaskWeeklyList() {
   const [taskList, setTaskList] = useState([
     [{
-      taskName: 'learning React',
+      taskName: 'Learning React',
       duration: '2 hours',
       priority: PRIORITIES.High,
       isCompleted: false,
