@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
-
-const PRIORITIES = {
-  High: 'High',
-  Medium: 'Medium',
-  Low: 'Low'
-}
+import { PRIORITIES } from '../../Constants/Priorities';
+import { DAYS, getDayIndex } from '../../Constants/Days';
 
 const TaskListContainer = styled.div`
   color: whitesmoke;
@@ -62,56 +58,18 @@ const TaskCard = styled.div`
 
 `;
 
-export default function TaskWeeklyList() {
-  const [taskList, setTaskList] = useState([
-    [{
-      taskName: 'Learning React',
-      duration: '2 hours',
-      priority: PRIORITIES.High,
-      isCompleted: false,
-    }],
-    [],
-    [{
-      taskName: 'Leetcode exercise in Python',
-      duration: '30 minutes',
-      priority: PRIORITIES.Medium,
-      isCompleted: false,
-    },
-    {
-      taskName: 'React project state management',
-      duration: '4 hours',
-      priority: PRIORITIES.Low,
-      isCompleted: false,
-    },
-    {
-      taskName: 'Experiment with Styled Components',
-      duration: '1 hour',
-      priority: PRIORITIES.Low,
-      isCompleted: true,
-    }],
-    [],
-    []
-  ]);
-
-  const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  function getDayIndex(day) {
-    return DAYS.map(day => day.toLowerCase()).indexOf(day.toLowerCase());
-  }
-  function getDayValue(index) {
-    return DAYS[index];
-  }
+export default function TaskWeeklyList(props) {
 
   function renderDailyTaskList(day) {
     const dayIndex = getDayIndex(day);
-    const dailyTaskList = taskList[dayIndex];
+    const dailyTaskList = props.taskList[dayIndex];
     const jsxList = [];
     for (let task of dailyTaskList) {
-      let taskJson = JSON.stringify(task);
       jsxList.push( 
         <TaskCard 
           priority={ task.priority } 
           isCompleted={ task.isCompleted }
-          key={taskJson}>
+          key={task.createdAt}>
           <h4>{ task.taskName }</h4>
           <p className="duration-p">Duration: { task.duration }</p>
           <p className="priority-p">Priority: { task.priority }</p>

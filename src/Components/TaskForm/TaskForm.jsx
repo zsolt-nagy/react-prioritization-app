@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
 import styled from 'styled-components';
+import { PRIORITIES } from '../../Constants/Priorities';
+import { DAYS_DICT as DAYS } from '../../Constants/Days';
 
 const FormContainer = styled.div`
   margin: 2rem;
@@ -8,15 +10,32 @@ const FormContainer = styled.div`
   border: 3px double whitesmoke;
 `;
 
-export default function TaskForm() {
-  const [taskName, setTaskName] = React.useState('');
-  const [duration, setDuration] = React.useState('');
+export default function TaskForm(props) {
+
+
+  const [taskName, setTaskName] = useState('');
+  const [duration, setDuration] = useState('');
+  const [priority, setPriority] = useState(PRIORITIES.Medium);
+  const [day, setDay] = useState(DAYS.Monday);
 
   function handleSubmit(event) {
     event.preventDefault();
-    // document.querySelector('[name=task-name]').value
-    alert(taskName);
+    const newInsertion = {
+      item: {
+        taskName,
+        duration,
+        priority,
+        isCompleted: false,
+        createdAt: new Date().getTime()
+      },
+      position: day
+    }
+    props.insertItem(newInsertion);
 
+    setTaskName('');
+    setDuration('');
+    setPriority(PRIORITIES.Medium);
+    setDay(DAYS.Monday);
   }
 
   function handleTaskNameChange(event) {
@@ -27,6 +46,14 @@ export default function TaskForm() {
     setDuration(event.target.value);
   }
 
+  function handlePriorityChange(event) {
+    setPriority(event.target.value);
+  }
+
+  function handleDayChange(event) {
+    setDay(event.target.value);
+  }
+
   return (
     <FormContainer onSubmit={handleSubmit}>
       <Form>
@@ -34,6 +61,7 @@ export default function TaskForm() {
           <Input 
             id="task-name" 
             name="task-name" 
+            required
             placeholder="Task name" 
             type="text" 
             value={taskName}
@@ -44,6 +72,7 @@ export default function TaskForm() {
           <Input
             id="duration"
             name="duration"
+            required
             placeholder="Duration"
             type="text"
             value={duration} 
@@ -57,10 +86,12 @@ export default function TaskForm() {
             name="priority"
             type="select"
             placeholder="Priority"
+            value={priority}
+            onChange={handlePriorityChange}
           >
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+            <option value={PRIORITIES.High}>High</option>
+            <option value={PRIORITIES.Medium}>Medium</option>
+            <option value={PRIORITIES.Low}>Low</option>
           </Input>  
         </FormGroup>  
         <FormGroup>
@@ -70,12 +101,14 @@ export default function TaskForm() {
             name="day"
             type="select"
             placeholder="Day"
+            value={day}
+            onChange={handleDayChange}
           >
-            <option value="monday">Monday</option>
-            <option value="tuesday">Tuesday</option>
-            <option value="wednesday">Wednesday</option>
-            <option value="thursday">Thursday</option>
-            <option value="friday">Friday</option>
+            <option value={DAYS.Monday}>Monday</option>
+            <option value={DAYS.Tuesday}>Tuesday</option>
+            <option value={DAYS.Wednesday}>Wednesday</option>
+            <option value={DAYS.Thursday}>Thursday</option>
+            <option value={DAYS.Friday}>Friday</option>
           </Input>  
         </FormGroup>         
         <Button type="submit">Submit</Button>
