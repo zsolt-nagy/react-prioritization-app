@@ -5,6 +5,8 @@ import TaskForm from './Components/TaskForm/TaskForm';
 import TaskWeeklyList from './Components/TaskWeeklyList/TaskWeeklyList';
 import { PRIORITIES } from './Constants/Priorities';
 import { getDayIndex } from './Constants/Days';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
   const [taskList, setTaskList] = useState([
@@ -59,7 +61,9 @@ function App() {
       </header>
       <main>
         <TaskForm insertItem={insertItem} />
-        <TaskWeeklyList taskList={taskList} />
+        <DndProvider backend={HTML5Backend}>
+          <TaskWeeklyList taskList={taskList} />
+        </DndProvider>
       </main>
       <footer>
         <Footer />
