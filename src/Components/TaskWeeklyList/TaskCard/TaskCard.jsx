@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled, { css } from 'styled-components';
 import { PRIORITIES } from '../../../Constants/Priorities';
 import { useDrag } from 'react-dnd';
@@ -24,12 +24,19 @@ const Card = styled.div`
 
 `;
 
-export default function TaskCard({ task }) {
+export default function TaskCard({ task, setDraggedCard }) {
+
   const [{isDragging}, drag] = useDrag(() => ({
-    type: 'Card', //`${task.createdAt}`,
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
+    type: String(task.createdAt),
+    collect: (monitor) => {
+      const isDragging = !!monitor.isDragging();
+      if (isDragging) {
+        setDraggedCard(String(task.createdAt));
+      }
+      return {
+        isDragging,
+      }
+    }
   }));  
 
   return (       

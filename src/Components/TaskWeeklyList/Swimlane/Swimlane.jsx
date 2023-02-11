@@ -9,6 +9,15 @@ const DayTitle = styled.h3`
   border: 1px solid whitesmoke;
 `;
 
+const DayContent = styled.div`
+  height: 700px;
+  overflow-y: auto;
+
+  @media (max-width: 992px) {
+    height: auto;
+  }
+`;
+
 const DaySwimlane = styled.div`
   width: 225px;
   margin: 0 -1px 0 0; // border-collapse
@@ -24,21 +33,28 @@ const DaySwimlane = styled.div`
   }
 `;
 
-export default function Swimlane({ day, dailyTaskList }) {
-    const [{ isOver }, drop] = useDrop(() => ({
-        accept: 'Card',
-        drop: () => console.log('DROP'),
+export default function Swimlane({ 
+  day, 
+  dailyTaskList, 
+  dropTargetValues, 
+  setDraggedCard,
+  handleDrop }) {
+    const [{ isOver, droppedCardCreatedAtValue }, drop] = useDrop(() => ({
+        accept: dropTargetValues,
+        drop (_item, monitor) {
+          handleDrop(day);
+          return undefined
+        },
         collect: monitor => ({
           isOver: !!monitor.isOver(),
+          droppedCardCreatedAtValue: monitor.getItemType()
         }),
       }), [])
-
-
 
     function renderDailyTaskList(day) {
         const jsxList = [];
         for (let task of dailyTaskList) {
-          jsxList.push( <TaskCard task={task} key={task.createdAt} /> );
+          jsxList.push( <TaskCard task={task} key={task.createdAt} setDraggedCard={setDraggedCard} /> );
         }
         return jsxList;
     }
@@ -46,9 +62,9 @@ export default function Swimlane({ day, dailyTaskList }) {
     return (
         <DaySwimlane>
           <DayTitle>{ day }</DayTitle>
-          <div className="day-tasks-container" ref={drop}>
+          <DayContent ref={drop}>
             { renderDailyTaskList(day) }
-          </div>
+          </DayContent>
         </DaySwimlane> 
     );
 

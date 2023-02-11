@@ -22,4 +22,4 @@ SO THAT we can report project progress to the executives
 
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 - We used the component library [ReactStrap](https://reactstrap.github.io/?path=/story/home-installation--page).
-- We used [react-dnd](https://react-dnd.github.io/react-dnd/about)
+- We used [react-dnd](https://react-dnd.github.io/react-dnd/about). [Tutorial](https://react-dnd.github.io/react-dnd/docs/tutorial)

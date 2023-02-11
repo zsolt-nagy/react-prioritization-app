@@ -9,6 +9,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
+  const [draggedCard, setDraggedCard] = useState(null);
   const [taskList, setTaskList] = useState([
     [{
       taskName: 'Learning React',
@@ -42,6 +43,8 @@ function App() {
     [],
     []
   ]);
+  const draggedCardRef = React.useRef();
+  draggedCardRef.current = draggedCard;
 
   const insertItem = (newInsertion) => {
     const dayIndex = getDayIndex(newInsertion.position);
@@ -52,17 +55,24 @@ function App() {
     });
   }
 
+  const handleDrop = (targetDay) => {
+    console.log(draggedCardRef.current, taskList, targetDay);
+  }
+
 
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Prioritization</h1>
+        <h1>Prioritization {draggedCard}</h1>
       </header>
       <main>
         <TaskForm insertItem={insertItem} />
         <DndProvider backend={HTML5Backend}>
-          <TaskWeeklyList taskList={taskList} />
+          <TaskWeeklyList 
+            taskList={taskList} 
+            setDraggedCard={setDraggedCard}
+            handleDrop={handleDrop} />
         </DndProvider>
       </main>
       <footer>

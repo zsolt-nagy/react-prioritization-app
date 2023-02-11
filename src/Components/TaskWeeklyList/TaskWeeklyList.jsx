@@ -19,16 +19,32 @@ const BoardContainer = styled.div`
 
 export default function TaskWeeklyList(props) {
 
-
+  function getAllCreatedAtIds() {
+    let ids = [];
+    for (let dayList of props.taskList) {
+      for (let cardData of dayList) {
+        ids.push(String(cardData.createdAt));
+      }
+    }
+    return ids;
+  }
 
   function renderWeek() {
     let jsxList = [];
+    const dropTargetValues = getAllCreatedAtIds();
 
     for (let day of DAYS) {
       const dayIndex = getDayIndex(day);
       const dailyTaskList = props.taskList[dayIndex];
       jsxList.push( 
-        <Swimlane key={day} day={day} dailyTaskList={dailyTaskList} />
+        <Swimlane 
+          key={day} 
+          day={day} 
+          dailyTaskList={dailyTaskList} 
+          dropTargetValues={dropTargetValues} 
+          setDraggedCard={props.setDraggedCard}
+          handleDrop={props.handleDrop}
+        />
       );
     }
     return jsxList;
