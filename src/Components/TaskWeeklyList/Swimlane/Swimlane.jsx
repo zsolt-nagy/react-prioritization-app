@@ -15,6 +15,7 @@ const DayContent = styled.div`
 
   @media (max-width: 992px) {
     height: auto;
+    min-height: 75px;
   }
 `;
 
@@ -36,11 +37,10 @@ const DaySwimlane = styled.div`
 export default function Swimlane({ 
   day, 
   dailyTaskList, 
-  dropTargetValues, 
   setDraggedCard,
   handleDrop }) {
     const [{ isOver, droppedCardCreatedAtValue }, drop] = useDrop(() => ({
-        accept: dropTargetValues,
+        accept: 'Card',
         drop (_item, monitor) {
           handleDrop(day);
           return undefined

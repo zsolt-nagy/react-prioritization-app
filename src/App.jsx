@@ -55,8 +55,41 @@ function App() {
     });
   }
 
+  const findItemByCreatedAt = (createdAt, taskList) => {
+    for (let i = 0; i < taskList.length; i++) {
+      let dayList = taskList[i];
+      for (let task of dayList) {
+        if (String(task.createdAt) === String(createdAt)) {
+          return { 
+            item: task,
+            dayIndex: i
+          };
+        }
+      }
+    }
+    return {
+      item: null,
+      dayIndex: -1
+    };
+  }
+
+  const deleteItemFromDayList = (dayList, item) => 
+    dayList.filter(task => task !== item);
+  
+
   const handleDrop = (targetDay) => {
     console.log(draggedCardRef.current, taskList, targetDay);
+    setTaskList(oldTaskList => {
+      let newTaskList = [...oldTaskList];
+      const { item, dayIndex } = findItemByCreatedAt(draggedCardRef.current, newTaskList);
+      if (item === null) {
+        return oldTaskList;
+      }
+      newTaskList[dayIndex] = deleteItemFromDayList(newTaskList[dayIndex], item);
+      const targetDayIndex = getDayIndex(targetDay);
+      newTaskList[targetDayIndex].push(item);
+      return newTaskList;
+    });
   }
 
 

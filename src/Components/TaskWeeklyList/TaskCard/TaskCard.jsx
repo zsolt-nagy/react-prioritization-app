@@ -27,7 +27,7 @@ const Card = styled.div`
 export default function TaskCard({ task, setDraggedCard }) {
 
   const [{isDragging}, drag] = useDrag(() => ({
-    type: String(task.createdAt),
+    type: 'Card', 
     collect: (monitor) => {
       const isDragging = !!monitor.isDragging();
       if (isDragging) {
