@@ -32,6 +32,8 @@ export default function TaskWeeklyList(props) {
           dailyTaskList={dailyTaskList} 
           setDraggedCard={props.setDraggedCard}
           handleDrop={props.handleDrop}
+          handleComplete={props.handleComplete}
+          handleDelete={props.handleDelete}
         />
       );
     }

@@ -24,7 +24,27 @@ const Card = styled.div`
 
 `;
 
-export default function TaskCard({ task, setDraggedCard }) {
+const ControlLink = styled.a`
+  text-decoration: none;
+  color: white;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+  border: 2px solid white;
+  padding: 7px;
+  margin: 5px;
+
+  &:hover, &:focus, &:active {
+    color: white;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+`;
+
+export default function TaskCard({ task, setDraggedCard, handleComplete, handleDelete }) {
 
   const [{isDragging}, drag] = useDrag(() => ({
     type: 'Card', 
@@ -39,6 +59,16 @@ export default function TaskCard({ task, setDraggedCard }) {
     }
   }));  
 
+  const completeClicked = (event) => {
+    event.preventDefault();
+    handleComplete(String(task.createdAt));
+  }
+
+  const deleteClicked = (event) => {
+    event.preventDefault();
+    handleDelete(String(task.createdAt));
+  }  
+
   return (       
   <Card 
     ref={drag}
@@ -47,6 +77,14 @@ export default function TaskCard({ task, setDraggedCard }) {
     <h4>{ task.taskName }</h4>
     <p className="duration-p">Duration: { task.duration }</p>
     <p className="priority-p">Priority: { task.priority }</p>
+    <p className="controls-p">
+      <ControlLink className="control-link" href="#" onClick={ completeClicked }>
+        ✔
+      </ControlLink>
+      <ControlLink className="control-link" href="#" onClick={ deleteClicked }>
+        🗑
+      </ControlLink>
+    </p>
   </Card>
   );
 }

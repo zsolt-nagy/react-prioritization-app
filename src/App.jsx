@@ -46,15 +46,8 @@ function App() {
   const draggedCardRef = React.useRef();
   draggedCardRef.current = draggedCard;
 
-  const insertItem = (newInsertion) => {
-    const dayIndex = getDayIndex(newInsertion.position);
-    setTaskList(oldTaskList => {
-      const newTaskList = [...oldTaskList];
-      newTaskList[dayIndex].push(newInsertion.item);
-      return newTaskList;
-    });
-  }
-
+  /********************************HELPER FUNCTIONS****************************/
+  // helper function for handleDrop, deletion, and completion
   const findItemByCreatedAt = (createdAt, taskList) => {
     for (let i = 0; i < taskList.length; i++) {
       let dayList = taskList[i];
@@ -73,12 +66,22 @@ function App() {
     };
   }
 
+  // helper function for handleDrop
   const deleteItemFromDayList = (dayList, item) => 
     dayList.filter(task => task !== item);
-  
 
+  /********************************INSERTION***********************************/
+  const insertItem = (newInsertion) => {
+    const dayIndex = getDayIndex(newInsertion.position);
+    setTaskList(oldTaskList => {
+      const newTaskList = [...oldTaskList];
+      newTaskList[dayIndex].push(newInsertion.item);
+      return newTaskList;
+    });
+  }
+
+  /********************************DRAG'N'DROP*********************************/
   const handleDrop = (targetDay) => {
-    console.log(draggedCardRef.current, taskList, targetDay);
     setTaskList(oldTaskList => {
       let newTaskList = [...oldTaskList];
       const { item, dayIndex } = findItemByCreatedAt(draggedCardRef.current, newTaskList);
@@ -92,7 +95,32 @@ function App() {
     });
   }
 
+  /*******************************COMPLETION***********************************/
+  const handleComplete = (itemCreatedAt) => {
+    setTaskList(oldTaskList => {
+      const newTaskList = [...oldTaskList];
+      const { item } = findItemByCreatedAt(itemCreatedAt, newTaskList);
+      if (item === null) {
+        return oldTaskList;
+      }      
+      item.isCompleted = true;
+      return newTaskList;
+    });
+  }
 
+
+  /*******************************DELETION*************************************/
+  const handleDelete = (itemCreatedAt) => {
+    setTaskList(oldTaskList => {
+      const newTaskList = [...oldTaskList];
+      const { item, dayIndex } = findItemByCreatedAt(itemCreatedAt, newTaskList);
+      if (item === null) {
+        return oldTaskList;
+      }      
+      newTaskList[dayIndex] = deleteItemFromDayList(newTaskList[dayIndex], item);
+      return newTaskList;
+    });
+  }
 
   return (
     <div className="App">
@@ -105,7 +133,9 @@ function App() {
           <TaskWeeklyList 
             taskList={taskList} 
             setDraggedCard={setDraggedCard}
-            handleDrop={handleDrop} />
+            handleDrop={handleDrop} 
+            handleComplete={handleComplete} 
+            handleDelete={handleDelete} />
         </DndProvider>
       </main>
       <footer>

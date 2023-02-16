@@ -38,6 +38,8 @@ export default function Swimlane({
   day, 
   dailyTaskList, 
   setDraggedCard,
+  handleComplete,
+  handleDelete,
   handleDrop }) {
     const [{ isOver, droppedCardCreatedAtValue }, drop] = useDrop(() => ({
         accept: 'Card',
@@ -54,7 +56,14 @@ export default function Swimlane({
     function renderDailyTaskList(day) {
         const jsxList = [];
         for (let task of dailyTaskList) {
-          jsxList.push( <TaskCard task={task} key={task.createdAt} setDraggedCard={setDraggedCard} /> );
+          jsxList.push( 
+            <TaskCard 
+              task={task} 
+              key={task.createdAt} 
+              setDraggedCard={setDraggedCard}
+              handleComplete={handleComplete}
+              handleDelete={handleDelete} /> 
+          );
         }
         return jsxList;
     }
