@@ -51,11 +51,13 @@ function App() {
   const findItemByCreatedAt = (createdAt, taskList) => {
     for (let i = 0; i < taskList.length; i++) {
       let dayList = taskList[i];
-      for (let task of dayList) {
+      for (let j = 0; j < dayList.length; j++) {
+        let task = dayList[j];
         if (String(task.createdAt) === String(createdAt)) {
           return { 
             item: task,
-            dayIndex: i
+            dayIndex: i, 
+            taskIndex: j
           };
         }
       }
@@ -116,6 +118,26 @@ function App() {
     });
   }
 
+  /*******************************MOVE*****************************************/
+  // direction: -1 is up, +1 is down
+  const handleMove = (itemCreatedAt, direction) => {
+    setTaskList(oldTaskList => {
+      const newTaskList = [...oldTaskList];
+      const {item, dayIndex, taskIndex} = findItemByCreatedAt(itemCreatedAt, newTaskList);
+      if (
+        item === null ||  // impossible if the code is used properly
+        (taskIndex === 0 && direction === -1) || // we can't move up 
+        (taskIndex >= newTaskList[dayIndex].length - 1 && direction === 1)) {  // we can't move down
+        return oldTaskList;
+      }
+      let otherIndex = taskIndex + direction;
+      let swap = newTaskList[dayIndex][taskIndex];
+      newTaskList[dayIndex][taskIndex] = newTaskList[dayIndex][otherIndex];
+      newTaskList[dayIndex][otherIndex] = swap;
+      return newTaskList;
+    });
+  }
+
 
   /*******************************DELETION*************************************/
   const handleDelete = (itemCreatedAt) => {
@@ -143,7 +165,8 @@ function App() {
             setDraggedCard={setDraggedCard}
             handleDrop={handleDrop} 
             handleComplete={handleComplete} 
-            handleDelete={handleDelete} />
+            handleDelete={handleDelete}
+            handleMove={handleMove} />
         </DndProvider>
       </main>
       <footer>

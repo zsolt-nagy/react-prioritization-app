@@ -46,7 +46,7 @@ const ControlLink = styled.a`
   }
 `;
 
-export default function TaskCard({ task, setDraggedCard, handleComplete, handleDelete }) {
+export default function TaskCard({ task, setDraggedCard, handleComplete, handleDelete, handleMove }) {
 
   const [{isDragging}, drag] = useDrag(() => ({
     type: 'Card', 
@@ -71,6 +71,16 @@ export default function TaskCard({ task, setDraggedCard, handleComplete, handleD
     handleDelete(String(task.createdAt));
   }  
 
+  const upClicked = (event) => {
+    event.preventDefault();
+    handleMove(String(task.createdAt), -1); // -1 means up 
+  }
+
+  const downClicked = (event) => {
+    event.preventDefault();
+    handleMove(String(task.createdAt), 1); // 1 means down 
+  }
+
   return (       
   <Card 
     ref={drag}
@@ -86,6 +96,12 @@ export default function TaskCard({ task, setDraggedCard, handleComplete, handleD
       </ControlLink>
       <ControlLink className="control-link" href="#" onClick={ deleteClicked }>
         🗑
+      </ControlLink>
+      <ControlLink className="control-link" href="#" onClick={ upClicked }>
+        🠕
+      </ControlLink>
+      <ControlLink className="control-link" href="#" onClick={ downClicked }>
+        🠗
       </ControlLink>
     </p>
   </Card>

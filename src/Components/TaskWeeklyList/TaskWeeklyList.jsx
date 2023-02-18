@@ -34,6 +34,7 @@ export default function TaskWeeklyList(props) {
           handleDrop={props.handleDrop}
           handleComplete={props.handleComplete}
           handleDelete={props.handleDelete}
+          handleMove={props.handleMove}
         />
       );
     }

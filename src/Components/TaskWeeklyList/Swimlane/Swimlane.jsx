@@ -46,6 +46,7 @@ export default function Swimlane({
   setDraggedCard,
   handleComplete,
   handleDelete,
+  handleMove,
   handleDrop }) {
     const [{ isOver }, drop] = useDrop(() => ({
         accept: 'Card',
@@ -67,7 +68,8 @@ export default function Swimlane({
               key={task.createdAt} 
               setDraggedCard={setDraggedCard}
               handleComplete={handleComplete}
-              handleDelete={handleDelete} /> 
+              handleDelete={handleDelete}
+              handleMove={handleMove} /> 
           );
         }
         return jsxList;
