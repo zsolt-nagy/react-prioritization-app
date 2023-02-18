@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/react-prioritization-app/static/css/main.38b6a040.css",
-    "main.js": "/react-prioritization-app/static/js/main.dd0f13e6.js",
+    "main.js": "/react-prioritization-app/static/js/main.e5890384.js",
     "index.html": "/react-prioritization-app/index.html",
     "main.38b6a040.css.map": "/react-prioritization-app/static/css/main.38b6a040.css.map",
-    "main.dd0f13e6.js.map": "/react-prioritization-app/static/js/main.dd0f13e6.js.map"
+    "main.e5890384.js.map": "/react-prioritization-app/static/js/main.e5890384.js.map"
   },
   "entrypoints": [
     "static/css/main.38b6a040.css",
-    "static/js/main.dd0f13e6.js"
+    "static/js/main.e5890384.js"
   ]
 }
