@@ -98,12 +98,20 @@ function App() {
   /*******************************COMPLETION***********************************/
   const handleComplete = (itemCreatedAt) => {
     setTaskList(oldTaskList => {
-      const newTaskList = [...oldTaskList];
+      // We need deep cloning, because if we change an item
+      // of newItems, without cloning the inner content, the
+      // changes will be reflected in the oldItems array too.
+      // In Strict Mode, React calls this setter twice with
+      // the same oldItems value. If we cange the oldItems
+      // value though, the second call will be based on the
+      // changed oldItems value, which results in double
+      // negation in this case.
+      const newTaskList = structuredClone(oldTaskList);
       const { item } = findItemByCreatedAt(itemCreatedAt, newTaskList);
       if (item === null) {
         return oldTaskList;
       }      
-      item.isCompleted = true;
+      item.isCompleted = !(item.isCompleted);
       return newTaskList;
     });
   }
@@ -125,7 +133,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Prioritization {draggedCard}</h1>
+        <h1>Prioritization</h1>
       </header>
       <main>
         <TaskForm insertItem={insertItem} />

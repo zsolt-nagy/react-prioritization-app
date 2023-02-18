@@ -1,6 +1,6 @@
 # Prioritization app 
 
-Hosting: [TODO](https://todo).
+Hosting: [[TODO](https://zsolt-nagy.github.io/react-prioritization-app/)]([https://todo](https://zsolt-nagy.github.io/react-prioritization-app/)).
 
 ## User stories
 
