@@ -1,6 +1,6 @@
 import React from 'react';
 import TaskCard from '../TaskCard/TaskCard';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useDrop } from 'react-dnd';
 
 const DayTitle = styled.h3`
@@ -32,6 +32,12 @@ const DaySwimlane = styled.div`
     width: 80%;
     min-width: 225px;
   }
+
+  ${ props => {
+    if (props.isOver) {
+      return css`background-color: #444444;`;
+    }
+  }}
 `;
 
 export default function Swimlane({ 
@@ -69,7 +75,7 @@ export default function Swimlane({
     }
 
     return (
-        <DaySwimlane>
+        <DaySwimlane isOver={isOver}>
           <DayTitle>{ day }</DayTitle>
           <DayContent ref={drop}>
             { renderDailyTaskList(day) }

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { PRIORITIES } from '../../../Constants/Priorities';
 import { useDrag } from 'react-dnd';
@@ -11,6 +11,8 @@ const Card = styled.div`
   margin: 12px;
 
   ${ props => (
+    props.isDragging ?
+    css`background-color: #444444;` :
     props.isCompleted ? 
     css`background-color: #005700;` :
     props.priority === PRIORITIES.High ? 
@@ -73,7 +75,8 @@ export default function TaskCard({ task, setDraggedCard, handleComplete, handleD
   <Card 
     ref={drag}
     priority={ task.priority } 
-    isCompleted={ task.isCompleted }>
+    isCompleted={ task.isCompleted }
+    isDragging={ isDragging }>
     <h4>{ task.taskName }</h4>
     <p className="duration-p">Duration: { task.duration }</p>
     <p className="priority-p">Priority: { task.priority }</p>
