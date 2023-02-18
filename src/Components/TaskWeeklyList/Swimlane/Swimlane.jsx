@@ -47,19 +47,18 @@ export default function Swimlane({
   handleComplete,
   handleDelete,
   handleDrop }) {
-    const [{ isOver, droppedCardCreatedAtValue }, drop] = useDrop(() => ({
+    const [{ isOver }, drop] = useDrop(() => ({
         accept: 'Card',
-        drop (_item, monitor) {
+        drop (_item/*, monitor */) {
           handleDrop(day);
           return undefined
         },
         collect: monitor => ({
-          isOver: !!monitor.isOver(),
-          droppedCardCreatedAtValue: monitor.getItemType()
+          isOver: !!monitor.isOver()
         }),
       }), [])
 
-    function renderDailyTaskList(day) {
+    function renderDailyTaskList() {
         const jsxList = [];
         for (let task of dailyTaskList) {
           jsxList.push( 
